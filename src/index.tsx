@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import KanbanContext from './contexts/KanbanContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <KanbanContext>
+      <App />
+    </KanbanContext>
   </React.StrictMode>,
   document.getElementById('root')
 );

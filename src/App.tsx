@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import Column from './components/Column';
+import { KanbanContext } from './contexts/KanbanContext';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const Kanban = useContext(KanbanContext);
+  const columns = Kanban.columns;
+
+  const Columns = Object.keys(columns).map((key) => (
+    <Column
+      title="todo"
+      key={key}
+      dataKey={key}
+      tasks={[
+        { id: 'da', value: 'fdsafsda' },
+        { id: 'ddsaa', value: '234' },
+        { id: 'ddsa', value: '234dfs' }
+      ]}
+    />
+  ));
+
+  return <div className="container mx-auto py-12 overflow-x-auto flex space-x-6">{Columns}</div>;
 }
 
 export default App;
