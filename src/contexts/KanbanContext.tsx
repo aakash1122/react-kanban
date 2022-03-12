@@ -59,18 +59,6 @@ const initState: IKanbanData = {
     '1234': {
       name: 'In Progress',
       tasks: ['af']
-    },
-    '12344': {
-      name: 'In Progress',
-      tasks: []
-    },
-    '1232344': {
-      name: 'In Progress',
-      tasks: []
-    },
-    '32344': {
-      name: 'In Progress',
-      tasks: []
     }
   },
   tasks: {
@@ -154,19 +142,28 @@ const KanbanContextProvider: FC = ({ children }) => {
     setKanban({ ...newKanban, tasks: remainingTasks });
   };
 
+  const removeTaskFromColumn = (taskKey: string, columnKey: string) => {
+    // create a copy of the specific column
+    const columns = cloneDeep(kanban.columns);
+
+    const columnToBeUpdated = columns[columnKey];
+    // remove task
+    const restOfTheTasks = columnToBeUpdated.tasks.filter((task) => task !== taskKey);
+    // set rest of the tasks
+    columnToBeUpdated.tasks = restOfTheTasks;
+    // return the updated column
+    return columns;
+  };
+
   const removeTask = (taskKey: string, columnKey: string) => {
     // create a copy
-    const newKanban = cloneDeep(kanban);
-
-    const column = newKanban.columns[columnKey];
-    // delete card from task list
-    delete newKanban.tasks[taskKey];
-
-    const restOfTheTasks = column.tasks.filter((task) => task !== taskKey);
-    // set rest of the tasks
-    column.tasks = restOfTheTasks;
-    // set new
-    setKanban(newKanban);
+    const allTasks = cloneDeep(kanban.tasks);
+    // update colum without the task referrence
+    const newColumns = removeTaskFromColumn(taskKey, columnKey);
+    // delete from tasklist
+    delete allTasks[taskKey];
+    // set new data
+    setKanban({ ...kanban, tasks: allTasks, columns: newColumns });
   };
 
   const lockTask = (taskKey: string) => {
@@ -181,7 +178,17 @@ const KanbanContextProvider: FC = ({ children }) => {
     setKanban({ ...kanban, tasks: allTasks });
   };
 
-  const moveTask = () => {};
+  const moveTask = (key: string, from: string, to: string) => {
+    // return if from and destination key is the same
+    if (from === to) return;
+    // remove task from the previous column
+    // it returns a new list of columns
+    const columns = removeTaskFromColumn(key, from);
+    // add task to the new destination column
+    columns[to].tasks.push(key);
+    // set new columns data
+    setKanban({ ...kanban, columns: columns });
+  };
 
   return (
     <KanbanContext.Provider

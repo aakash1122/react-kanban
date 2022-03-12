@@ -4,6 +4,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdModeEditOutline } from 'react-icons/md';
 import { KanbanContext } from '../../contexts/KanbanContext';
 import NameInput from '../inputs/NameInput';
+import { createTaskJsonDto } from '../../util/taks';
 
 type Props = {
   dataKey: string;
@@ -28,19 +29,19 @@ const TaskCard: FC<Props> = ({ dataKey, columnKey }) => {
     // ev.dataTransfer.setData('text/plain', task.id);
 
     ev.dataTransfer.effectAllowed = 'move';
-    ev.dataTransfer.setData('text/html', 'hello');
+    ev.dataTransfer.setData('text', createTaskJsonDto(dataKey, columnKey));
   };
-  const handleDragEnd: DragEventHandler<HTMLDivElement> = (ev) => {
-    console.log('drag end');
-    ev.currentTarget.classList.remove('ring-2', 'cursor-move');
-    ev.dataTransfer.clearData();
-    console.log(ev.detail);
-  };
+  // const handleDragEnd: DragEventHandler<HTMLDivElement> = (ev) => {
+  //   console.log('drag end');
+  //   ev.currentTarget.classList.remove('ring-2', 'cursor-move');
+  //   ev.dataTransfer.clearData();
+  //   console.log(ev.detail);
+  // };
 
-  const handleDrop: DragEventHandler<HTMLDivElement> = (ev) => {
-    ev.stopPropagation();
-    console.log('dropped', ev.dataTransfer);
-  };
+  // const handleDrop: DragEventHandler<HTMLDivElement> = (ev) => {
+  //   ev.stopPropagation();
+  //   console.log('dropped', ev.dataTransfer);
+  // };
 
   const enableEditing = () => {
     setAllowToEdit(true);
@@ -57,8 +58,9 @@ const TaskCard: FC<Props> = ({ dataKey, columnKey }) => {
         className="bg-white px-2 py-4 font-lg rounded flex items-stretch justify-between gap-4 cursor-pointer shadow transition-all duration-200 ease-in-out transform ring-offset-2"
         draggable={!taskDetail.locked}
         onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onDrop={handleDrop}>
+        // onDragEnd={handleDragEnd}
+        // onDrop={handleDrop}
+      >
         {allowToEdit ? (
           <NameInput
             type="textArea"

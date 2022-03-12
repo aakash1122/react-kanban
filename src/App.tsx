@@ -12,7 +12,7 @@ function App() {
   ));
 
   return (
-    <div className="min-h-screen max-h-screen container mx-auto py-12 overflow-x-auto flex items-stretch flex-shrink-0 space-x-6">
+    <div className="min-h-screen max-h-screen container px-2 mx-auto py-12 overflow-x-auto flex items-stretch space-x-6">
       {Columns}
       <AddColumn />
     </div>

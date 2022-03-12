@@ -5,12 +5,17 @@ import { TaskCard } from './cards';
 import { AddCard } from './inputs';
 import NameInput from './inputs/NameInput';
 
+export type TaskDto = {
+  taskKey: string;
+  columnKey: string;
+};
+
 type Props = {
   dataKey: string;
 };
 
 const Column: FC<Props> = ({ dataKey }) => {
-  const { getColumnById, renameColumn, removeColumn } = useContext(KanbanContext);
+  const { getColumnById, renameColumn, removeColumn, moveTask } = useContext(KanbanContext);
   const columnData = getColumnById(dataKey);
   const tasks = columnData.tasks;
   const [allowToEdit, setAllowToEdit] = useState(false);
@@ -18,7 +23,7 @@ const Column: FC<Props> = ({ dataKey }) => {
   const handleDragEnter: DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
     console.log('drag entered', ev.dataTransfer.getData('text/plain'));
-    ev.currentTarget.classList.add('ring-2');
+    // ev.currentTarget.classList.add('ring-2');
   };
 
   const handleDragLeave: DragEventHandler<HTMLDivElement> = (ev) => {
@@ -28,13 +33,17 @@ const Column: FC<Props> = ({ dataKey }) => {
   };
 
   const handleOnDragOver: DragEventHandler<HTMLDivElement> = (ev) => {
+    // this makes it dropable
     ev.preventDefault();
+    ev.currentTarget.classList.add('ring-2');
   };
 
   const handleDrop: DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
-    const dataJSON = ev.dataTransfer.getData('text/plain');
+    const dataJSON: TaskDto = JSON.parse(ev.dataTransfer.getData('text/plain'));
     console.log('dropped with:-------------------- ', dataJSON);
+    moveTask(dataJSON.taskKey, dataJSON.columnKey, dataKey);
+    ev.currentTarget.classList.remove('ring-2');
   };
 
   const handleRenameColumn = (newName: string) => {
@@ -48,7 +57,7 @@ const Column: FC<Props> = ({ dataKey }) => {
 
   return (
     <div
-      className="column bg-gray-100 rounded ring-offset-2 flex flex-col flex-1 overflow-y-auto max-h-full"
+      className="column bg-gray-100 rounded ring-offset-2 flex flex-col overflow-y-auto max-h-full"
       onDragEnter={handleDragEnter}
       onDragOver={handleOnDragOver}
       onDragLeave={handleDragLeave}
@@ -61,7 +70,7 @@ const Column: FC<Props> = ({ dataKey }) => {
           onHide={() => setAllowToEdit(false)}
         />
       ) : (
-        <div className="flex items-center justify-between gap-2 p-3">
+        <div className="flex items-center justify-between gap-2 p-3 bg-[#d7d7d769]">
           <h1
             className="text-xl font-semibold py-2 sticky top-0 cursor-pointer flex-1"
             onDoubleClick={() => setAllowToEdit(true)}>

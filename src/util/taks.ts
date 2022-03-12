@@ -11,6 +11,13 @@ export const createCard = (value: string): Task => {
   };
 };
 
+export const createTaskJsonDto = (taskKey: string, columnKey: string) => {
+  return JSON.stringify({
+    taskKey,
+    columnKey
+  });
+};
+
 export const removeTasksById = (tasks: TaskList, tasksToBeRemoved: string[]) => {
   // return tasks if there is no task to be removed
   if (isEmpty(tasksToBeRemoved)) return tasks;
