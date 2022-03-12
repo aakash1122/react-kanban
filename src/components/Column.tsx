@@ -1,22 +1,18 @@
 import React, { DragEventHandler, FC, useContext, useState } from 'react';
-import { ITask } from './cards/TaskCard';
+import { AiFillDelete } from 'react-icons/ai';
+import { KanbanContext } from '../contexts/KanbanContext';
 import { TaskCard } from './cards';
 import { AddCard } from './inputs';
-import { KanbanContext } from '../contexts/KanbanContext';
 import NameInput from './inputs/NameInput';
-import { BsThreeDots } from 'react-icons/bs';
-import { AiFillDelete } from 'react-icons/ai';
 
 type Props = {
-  title: string;
-  tasks: ITask[];
   dataKey: string;
 };
 
-const Column: FC<Props> = ({ title, tasks, dataKey }) => {
-  const { getColumnById, renameColumn } = useContext(KanbanContext);
+const Column: FC<Props> = ({ dataKey }) => {
+  const { getColumnById, renameColumn, removeColumn } = useContext(KanbanContext);
   const columnData = getColumnById(dataKey);
-
+  const tasks = columnData.tasks;
   const [allowToEdit, setAllowToEdit] = useState(false);
 
   const handleDragEnter: DragEventHandler<HTMLDivElement> = (ev) => {
@@ -46,11 +42,13 @@ const Column: FC<Props> = ({ title, tasks, dataKey }) => {
     setAllowToEdit(false);
   };
 
-  const Tasks = columnData.tasks.map((taskId) => <TaskCard key={taskId} dataKey={taskId} />);
+  const Tasks = tasks.map((taskId) => (
+    <TaskCard key={taskId} dataKey={taskId} columnKey={dataKey} />
+  ));
 
   return (
     <div
-      className="w-96 min-h-screen lg:w-1/4 p-3 bg-gray-100 rounded ring-offset-2"
+      className="column bg-gray-100 rounded ring-offset-2 flex flex-col flex-1 overflow-y-auto max-h-full"
       onDragEnter={handleDragEnter}
       onDragOver={handleOnDragOver}
       onDragLeave={handleDragLeave}
@@ -63,17 +61,21 @@ const Column: FC<Props> = ({ title, tasks, dataKey }) => {
           onHide={() => setAllowToEdit(false)}
         />
       ) : (
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-2 p-3">
           <h1
             className="text-xl font-semibold py-2 sticky top-0 cursor-pointer flex-1"
             onDoubleClick={() => setAllowToEdit(true)}>
-            {columnData.name}
+            {columnData.name} <span className="text-sm text-gray-500">({tasks.length})</span>
           </h1>
-          <AiFillDelete className="cursor-pointer hover:fill-red-500" size={20} />
+          <AiFillDelete
+            className="cursor-pointer hover:fill-red-500"
+            size={20}
+            onClick={() => removeColumn(dataKey)}
+          />
         </div>
       )}
-      <div className="py-3 flex flex-col gap-y-2">{Tasks}</div>
-      <AddCard />
+      <div className="p-3 flex flex-col gap-y-2 flex-1 overflow-y-auto">{Tasks}</div>
+      <AddCard columnKey={dataKey} />
     </div>
   );
 };

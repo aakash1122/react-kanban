@@ -1,11 +1,13 @@
 import React, { DragEventHandler, FC, useContext, useState } from 'react';
+import { FaLockOpen, FaLock } from 'react-icons/fa';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdModeEditOutline } from 'react-icons/md';
 import { KanbanContext } from '../../contexts/KanbanContext';
-import { FaUnlockAlt, FaLock } from 'react-icons/fa';
 import NameInput from '../inputs/NameInput';
 
 type Props = {
   dataKey: string;
+  columnKey: string;
 };
 
 export interface ITask {
@@ -13,8 +15,8 @@ export interface ITask {
   value: string;
 }
 
-const TaskCard: FC<Props> = ({ dataKey }) => {
-  const { getTasksById, renameTask } = useContext(KanbanContext);
+const TaskCard: FC<Props> = ({ dataKey, columnKey }) => {
+  const { getTasksById, renameTask, removeTask, lockTask, unlockTask } = useContext(KanbanContext);
   const taskDetail = getTasksById(dataKey);
 
   const [allowToEdit, setAllowToEdit] = useState(false);
@@ -52,7 +54,7 @@ const TaskCard: FC<Props> = ({ dataKey }) => {
   return (
     <form>
       <div
-        className="bg-white p-2 font-lg rounded flex items-center justify-between gap-4 cursor-pointer shadow transition-all duration-200 ease-in-out transform ring-offset-2"
+        className="bg-white px-2 py-4 font-lg rounded flex items-stretch justify-between gap-4 cursor-pointer shadow transition-all duration-200 ease-in-out transform ring-offset-2"
         draggable={!taskDetail.locked}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
@@ -69,8 +71,13 @@ const TaskCard: FC<Props> = ({ dataKey }) => {
             {taskDetail.value}
           </p>
         )}
-        <div className="flex items-center gap-4">
-          {taskDetail.locked ? <FaLock /> : <FaUnlockAlt />}
+        <div className="flex items-start gap-4">
+          <RiDeleteBin5Line onClick={() => removeTask(dataKey, columnKey)} />
+          {taskDetail.locked ? (
+            <FaLock onClick={() => unlockTask(dataKey)} />
+          ) : (
+            <FaLockOpen onClick={() => lockTask(dataKey)} />
+          )}
           <MdModeEditOutline onClick={enableEditing} />
         </div>
       </div>

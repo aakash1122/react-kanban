@@ -11,34 +11,41 @@ const NameInput: FC<Props> = ({ currentValue, type, updateValue, onHide }) => {
   const [value, setValue] = useState<string>(currentValue);
 
   const handleUpdateValue = (value: string) => {
-    updateValue(value);
+    if (value.trim().length > 0) {
+      updateValue(value);
+    }
     onHide();
   };
 
   const styles = `flex-1 border outline-none focus:outline-none focus:ring-2 rounded p-1 focus:ring-blue-700 `;
 
-  if (type === 'text') {
-    return (
-      <input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onBlur={(e) => updateValue(value)}
-        onKeyPress={(e) => e.key === 'Enter' && handleUpdateValue(value)}
-        autoFocus
-        className={styles}
-      />
-    );
-  }
-
   return (
-    <textarea
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      onBlur={(e) => handleUpdateValue(value)}
-      onKeyPress={(e) => e.key === 'Enter' && handleUpdateValue(value)}
-      autoFocus
-      className={styles}
-    />
+    <div className="w-full flex items-stretch gap-x-3 p-2 bg-[#F3F4F6] rounded">
+      {type === 'text' ? (
+        <input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onBlur={(e) => handleUpdateValue(value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleUpdateValue(value)}
+          autoFocus
+          className={styles}
+        />
+      ) : (
+        <textarea
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onBlur={(e) => handleUpdateValue(value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleUpdateValue(value)}
+          autoFocus
+          className={styles}
+        />
+      )}
+      <button
+        className="bg-blue-600 px-4 py-1 text-white rounded"
+        onClick={() => handleUpdateValue(value)}>
+        Add
+      </button>
+    </div>
   );
 };
 

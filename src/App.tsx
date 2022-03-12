@@ -1,25 +1,22 @@
 import React, { useContext } from 'react';
 import Column from './components/Column';
+import AddColumn from './components/inputs/AddColumn';
 import { KanbanContext } from './contexts/KanbanContext';
 
 function App() {
   const Kanban = useContext(KanbanContext);
   const columns = Kanban.columns;
 
-  const Columns = Object.keys(columns).map((key) => (
-    <Column
-      title="todo"
-      key={key}
-      dataKey={key}
-      tasks={[
-        { id: 'da', value: 'fdsafsda' },
-        { id: 'ddsaa', value: '234' },
-        { id: 'ddsa', value: '234dfs' }
-      ]}
-    />
+  const Columns = Object.keys(columns).map((key, index) => (
+    <Column dataKey={key} key={`${key}-${index}`} />
   ));
 
-  return <div className="container mx-auto py-12 overflow-x-auto flex space-x-6">{Columns}</div>;
+  return (
+    <div className="min-h-screen max-h-screen container mx-auto py-12 overflow-x-auto flex items-stretch flex-shrink-0 space-x-6">
+      {Columns}
+      <AddColumn />
+    </div>
+  );
 }
 
 export default App;
