@@ -1,10 +1,10 @@
 import React, { DragEventHandler, FC, useContext, useState } from 'react';
-import { FaLockOpen, FaLock } from 'react-icons/fa';
-import { RiDeleteBin5Line } from 'react-icons/ri';
+import { FaLock, FaLockOpen } from 'react-icons/fa';
 import { MdModeEditOutline } from 'react-icons/md';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 import { KanbanContext } from '../../contexts/KanbanContext';
-import NameInput from '../inputs/NameInput';
 import { createTaskJsonDto } from '../../util/taks';
+import NameInput from '../inputs/NameInput';
 
 type Props = {
   dataKey: string;
@@ -23,25 +23,9 @@ const TaskCard: FC<Props> = ({ dataKey, columnKey }) => {
   const [allowToEdit, setAllowToEdit] = useState(false);
 
   const handleDragStart: DragEventHandler<HTMLDivElement> = (ev) => {
-    console.log('drag start');
-    ev.currentTarget.classList.add('ring-2', 'cursor-move');
-    console.log(ev.detail);
-    // ev.dataTransfer.setData('text/plain', task.id);
-
     ev.dataTransfer.effectAllowed = 'move';
     ev.dataTransfer.setData('text', createTaskJsonDto(dataKey, columnKey));
   };
-  // const handleDragEnd: DragEventHandler<HTMLDivElement> = (ev) => {
-  //   console.log('drag end');
-  //   ev.currentTarget.classList.remove('ring-2', 'cursor-move');
-  //   ev.dataTransfer.clearData();
-  //   console.log(ev.detail);
-  // };
-
-  // const handleDrop: DragEventHandler<HTMLDivElement> = (ev) => {
-  //   ev.stopPropagation();
-  //   console.log('dropped', ev.dataTransfer);
-  // };
 
   const enableEditing = () => {
     setAllowToEdit(true);
@@ -55,12 +39,9 @@ const TaskCard: FC<Props> = ({ dataKey, columnKey }) => {
   return (
     <form>
       <div
-        className="bg-white px-2 py-4 font-lg rounded flex items-stretch justify-between gap-4 cursor-pointer shadow transition-all duration-200 ease-in-out transform ring-offset-2"
+        className="bg-white px-2 py-4 font-lg rounded flex items-stretch justify-between gap-4 cursor-pointer shadow transition-all duration-200 ease-in-out transform ring-offset-2 select-none"
         draggable={!taskDetail.locked}
-        onDragStart={handleDragStart}
-        // onDragEnd={handleDragEnd}
-        // onDrop={handleDrop}
-      >
+        onDragStart={handleDragStart}>
         {allowToEdit ? (
           <NameInput
             type="textArea"
@@ -69,19 +50,24 @@ const TaskCard: FC<Props> = ({ dataKey, columnKey }) => {
             onHide={() => setAllowToEdit(false)}
           />
         ) : (
-          <p className="text-base text-gray-700" onDoubleClick={(e) => setAllowToEdit(true)}>
-            {taskDetail.value}
-          </p>
+          <>
+            <p className="text-base text-gray-700" onDoubleClick={(e) => setAllowToEdit(true)}>
+              {taskDetail.value}
+            </p>
+            <div className="flex items-start gap-4">
+              <RiDeleteBin5Line
+                onClick={() => removeTask(dataKey, columnKey)}
+                className="fill-red-600"
+              />
+              {taskDetail.locked ? (
+                <FaLock onClick={() => unlockTask(dataKey)} className="fill-orange-500" />
+              ) : (
+                <FaLockOpen onClick={() => lockTask(dataKey)} className="fill-blue-600" />
+              )}
+              <MdModeEditOutline onClick={enableEditing} />
+            </div>
+          </>
         )}
-        <div className="flex items-start gap-4">
-          <RiDeleteBin5Line onClick={() => removeTask(dataKey, columnKey)} />
-          {taskDetail.locked ? (
-            <FaLock onClick={() => unlockTask(dataKey)} />
-          ) : (
-            <FaLockOpen onClick={() => lockTask(dataKey)} />
-          )}
-          <MdModeEditOutline onClick={enableEditing} />
-        </div>
       </div>
     </form>
   );

@@ -20,28 +20,14 @@ const Column: FC<Props> = ({ dataKey }) => {
   const tasks = columnData.tasks;
   const [allowToEdit, setAllowToEdit] = useState(false);
 
-  const handleDragEnter: DragEventHandler<HTMLDivElement> = (ev) => {
-    ev.preventDefault();
-    console.log('drag entered', ev.dataTransfer.getData('text/plain'));
-    // ev.currentTarget.classList.add('ring-2');
-  };
-
-  const handleDragLeave: DragEventHandler<HTMLDivElement> = (ev) => {
-    ev.preventDefault();
-    console.log('drag leave', ev.dataTransfer.getData('text/plain'));
-    ev.currentTarget.classList.remove('ring-2');
-  };
-
   const handleOnDragOver: DragEventHandler<HTMLDivElement> = (ev) => {
     // this makes it dropable
     ev.preventDefault();
-    ev.currentTarget.classList.add('ring-2');
   };
 
   const handleDrop: DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
     const dataJSON: TaskDto = JSON.parse(ev.dataTransfer.getData('text/plain'));
-    console.log('dropped with:-------------------- ', dataJSON);
     moveTask(dataJSON.taskKey, dataJSON.columnKey, dataKey);
     ev.currentTarget.classList.remove('ring-2');
   };
@@ -58,9 +44,7 @@ const Column: FC<Props> = ({ dataKey }) => {
   return (
     <div
       className="column bg-gray-100 rounded ring-offset-2 flex flex-col overflow-y-auto max-h-full"
-      onDragEnter={handleDragEnter}
       onDragOver={handleOnDragOver}
-      onDragLeave={handleDragLeave}
       onDrop={handleDrop}>
       {allowToEdit ? (
         <NameInput
