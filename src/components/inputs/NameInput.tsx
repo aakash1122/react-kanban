@@ -41,7 +41,7 @@ const NameInput: FC<Props> = ({ currentValue, type, updateValue, onHide }) => {
         />
       )}
       <button
-        className="bg-blue-600 px-4 py-1 text-white rounded"
+        className={`${value.length ? 'bg-blue-600' : 'bg-gray-300'}  px-4 py-1 text-white rounded`}
         onClick={() => handleUpdateValue(value)}>
         Add
       </button>
