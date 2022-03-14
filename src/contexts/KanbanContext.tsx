@@ -1,6 +1,6 @@
 import React, { createContext, FC, useState } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
-import { createCard, removeTasksById } from '../util/taks';
+import { createCard, removeTasksById } from '../util/task';
 import { nanoid } from 'nanoid';
 import { createColumn } from '../util/column';
 

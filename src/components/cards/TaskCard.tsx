@@ -3,7 +3,7 @@ import { FaLock, FaLockOpen } from 'react-icons/fa';
 import { MdModeEditOutline } from 'react-icons/md';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { KanbanContext } from '../../contexts/KanbanContext';
-import { createTaskJsonDto } from '../../util/taks';
+import { createTaskJsonDto } from '../../util/task';
 import NameInput from '../inputs/NameInput';
 
 type Props = {
