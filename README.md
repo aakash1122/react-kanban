@@ -1,4 +1,4 @@
-# clean and fast Kanban board in react ❤️‍🔥
+# Clean and fast Kanban board in react ❤️‍🔥
 
 <img src="./preview.png" alt="Alt text" title="Optional title">
 
