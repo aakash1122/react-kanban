@@ -1,0 +1,10 @@
+{
+  "projectId": "n9xouy",
+  "baseUrl": "http://localhost:3000",
+  "ignoreTestFiles": ["**/1-getting-started/*.js", "**/2-advanced-examples/*.js"],
+  "watchForFileChanges": true,
+  "viewportWidth": 1920,
+  "viewportHeight": 1080,
+  "env": {},
+  "experimentalStudio": true
+}

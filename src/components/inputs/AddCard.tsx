@@ -41,7 +41,8 @@ const AddCard: FC<Props> = ({ columnKey }) => {
           onKeyPress={(e) => e.key === 'Enter' && handleAddCard()}
           rows={4}
           autoFocus
-          className="w-full p-2 outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 rounded"></textarea>
+          className="w-full p-2 outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 rounded"
+          data-cy="card-name-input"></textarea>
         <div className="flex items-center gap-x-4 py-2">
           <button className="btn-primary" onClick={handleAddCard}>
             Add Card
@@ -59,7 +60,8 @@ const AddCard: FC<Props> = ({ columnKey }) => {
   return (
     <div
       className="flex items-center justify-start gap-2 hover:bg-blue-800 rounded cursor-pointer p-3 bg-blue-600 text-white"
-      onClick={() => setShowInput(true)}>
+      onClick={() => setShowInput(true)}
+      data-cy="add-card-button">
       <IoMdAdd />
       <p>Add a card</p>
     </div>

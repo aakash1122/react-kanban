@@ -4,7 +4,7 @@ import { createCard, removeTasksById } from '../util/task';
 import { nanoid } from 'nanoid';
 import { createColumn } from '../util/column';
 
-interface IKanbanData {
+export interface IKanbanData {
   columns: {
     [id: string]: Column;
   };
@@ -13,7 +13,7 @@ interface IKanbanData {
   };
 }
 
-interface IkanbanMethods {
+export interface IkanbanMethods {
   getTasksById: (key: string) => Task;
   getColumnById: (key: string) => Column;
   renameTask: (key: string, newName: string) => void;
@@ -27,7 +27,7 @@ interface IkanbanMethods {
   unlockTask: (taskKey: string) => void;
 }
 
-type Ikanban = IKanbanData & IkanbanMethods;
+export type Ikanban = IKanbanData & IkanbanMethods;
 
 export type Column = {
   name: string;
@@ -54,25 +54,34 @@ const initState: IKanbanData = {
   columns: {
     '123': {
       name: 'Todo',
-      tasks: ['as', 'ad']
+      tasks: ['xxDEi46n', 'a32h@4C']
     },
     '1234': {
       name: 'In Progress',
-      tasks: ['af']
+      tasks: ['35DFke3']
+    },
+    '12345': {
+      name: 'Done',
+      tasks: ['a2h@cW24']
     }
   },
   tasks: {
-    as: {
+    'a2h@cW24': {
       id: '1234',
       locked: false,
       value: 'Build Kanban'
     },
-    ad: {
+    'a32h@4C': {
+      id: '1234',
+      locked: false,
+      value: 'Add Colors 💄'
+    },
+    '35DFke3': {
       id: '12345',
       locked: false,
       value: 'Add test case'
     },
-    af: {
+    xxDEi46n: {
       id: '12345',
       locked: true,
       value: 'Add animation after adding new card'

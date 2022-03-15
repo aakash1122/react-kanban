@@ -45,18 +45,21 @@ const Column: FC<Props> = ({ dataKey }) => {
     <div
       className="column bg-gray-100 rounded ring-offset-2 flex flex-col overflow-y-auto max-h-full"
       onDragOver={handleOnDragOver}
-      onDrop={handleDrop}>
+      onDrop={handleDrop}
+      data-cy="column">
       {allowToEdit ? (
         <NameInput
           type="text"
           updateValue={handleRenameColumn}
           currentValue={columnData.name}
           onHide={() => setAllowToEdit(false)}
+          name="rename-column"
         />
       ) : (
         <div className="flex items-center justify-between gap-2 p-3 bg-[#d7d7d769]">
           <h1
             className="text-xl font-semibold py-2 sticky top-0 cursor-pointer flex-1"
+            data-cy="column-heading"
             onDoubleClick={() => setAllowToEdit(true)}>
             {columnData.name} <span className="text-sm text-gray-500">({tasks.length})</span>
           </h1>
@@ -64,6 +67,7 @@ const Column: FC<Props> = ({ dataKey }) => {
             className="cursor-pointer hover:fill-red-500"
             size={20}
             onClick={() => removeColumn(dataKey)}
+            data-cy="column-delete-icon"
           />
         </div>
       )}

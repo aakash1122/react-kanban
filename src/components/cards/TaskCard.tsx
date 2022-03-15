@@ -41,30 +41,44 @@ const TaskCard: FC<Props> = ({ dataKey, columnKey }) => {
       <div
         className="bg-white px-2 py-4 font-lg rounded flex items-stretch justify-between gap-4 cursor-pointer shadow transition-all duration-200 ease-in-out transform ring-offset-2 select-none"
         draggable={!taskDetail.locked}
-        onDragStart={handleDragStart}>
+        onDragStart={handleDragStart}
+        data-cy="task-card">
         {allowToEdit ? (
           <NameInput
             type="textArea"
             updateValue={updateTask}
             currentValue={taskDetail.value}
             onHide={() => setAllowToEdit(false)}
+            name="task"
           />
         ) : (
           <>
-            <p className="text-base text-gray-700" onDoubleClick={(e) => setAllowToEdit(true)}>
+            <p
+              className="text-base text-gray-700"
+              onDoubleClick={(e) => setAllowToEdit(true)}
+              data-cy="task-value">
               {taskDetail.value}
             </p>
             <div className="flex items-start gap-4">
               <RiDeleteBin5Line
                 onClick={() => removeTask(dataKey, columnKey)}
                 className="fill-red-600"
+                data-cy="card-remove-button"
               />
               {taskDetail.locked ? (
-                <FaLock onClick={() => unlockTask(dataKey)} className="fill-orange-500" />
+                <FaLock
+                  onClick={() => unlockTask(dataKey)}
+                  className="fill-orange-500"
+                  data-cy="card-unlock-button"
+                />
               ) : (
-                <FaLockOpen onClick={() => lockTask(dataKey)} className="fill-blue-600" />
+                <FaLockOpen
+                  onClick={() => lockTask(dataKey)}
+                  className="fill-blue-600"
+                  data-cy="card-lock-button"
+                />
               )}
-              <MdModeEditOutline onClick={enableEditing} />
+              <MdModeEditOutline onClick={enableEditing} data-cy="card-rename-button" />
             </div>
           </>
         )}

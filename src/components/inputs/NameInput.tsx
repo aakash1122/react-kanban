@@ -5,9 +5,10 @@ type Props = {
   type: 'text' | 'textArea';
   updateValue: (val: string) => void;
   onHide: Function;
+  name: string;
 };
 
-const NameInput: FC<Props> = ({ currentValue, type, updateValue, onHide }) => {
+const NameInput: FC<Props> = ({ currentValue, type, updateValue, onHide, name }) => {
   const [value, setValue] = useState<string>(currentValue);
 
   const handleUpdateValue = (value: string) => {
@@ -29,6 +30,7 @@ const NameInput: FC<Props> = ({ currentValue, type, updateValue, onHide }) => {
           onKeyPress={(e) => e.key === 'Enter' && handleUpdateValue(value)}
           autoFocus
           className={styles}
+          data-cy={`${name}-name-input`}
         />
       ) : (
         <textarea
@@ -38,11 +40,13 @@ const NameInput: FC<Props> = ({ currentValue, type, updateValue, onHide }) => {
           onKeyPress={(e) => e.key === 'Enter' && handleUpdateValue(value)}
           autoFocus
           className={styles}
+          data-cy={`${name}-name-input`}
         />
       )}
       <button
         className={`${value.length ? 'bg-blue-600' : 'bg-gray-300'}  px-4 py-1 text-white rounded`}
-        onClick={() => handleUpdateValue(value)}>
+        onClick={() => handleUpdateValue(value)}
+        data-cy={`${name}-input-submit-button`}>
         Add
       </button>
     </div>

@@ -26,6 +26,7 @@ const AddColumn = (props: Props) => {
           onHide={setShowInput}
           type="text"
           updateValue={handleAddColumn}
+          name="column"
         />
       </div>
     );
@@ -34,7 +35,8 @@ const AddColumn = (props: Props) => {
   return (
     <div
       className="column bg-[#F3F4F6] flex items-center gap-x-2 p-2 cursor-pointer h-max"
-      onClick={() => setShowInput(true)}>
+      onClick={() => setShowInput(true)}
+      data-cy="add-column-button">
       <CgAddR />
       <button className="text-blue-600 font-semibold">Add List</button>
     </div>
