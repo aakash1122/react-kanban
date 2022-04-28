@@ -31,7 +31,11 @@
     "test": "react-scripts test --watchAll=false && npm run e2e:headless",
     "eject": "react-scripts eject",
     "e2e": "cypress run --headed",
-    "e2e:headless": "cypress run --headless"
+    "e2e:headless": "cypress run --headless",
+    "lint": "eslint src --color",
+    "prettier": "prettier src -check",
+    "lint-staged": "lint-staged --config lint-staged.js",
+    "husky-install": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -54,7 +58,12 @@
   "devDependencies": {
     "autoprefixer": "^10.4.2",
     "cypress": "^9.5.1",
+    "eslint": "^8.14.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.1",
     "postcss": "^8.4.8",
-    "tailwindcss": "^3.0.23"
+    "prettier": "^2.6.2",
+    "tailwindcss": "^3.0.23",
+    "tsc-files": "^1.1.3"
   }
 }
