@@ -15,3 +15,18 @@ jobs:
       - name: 🔶 Start Unit Test
         run: |
           npm run unit:test
+  e2e_test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [17.x]
+    steps:
+      - name: 📁 Check out repository code
+        uses: actions/checkout@v3
+      - name: 🔰 Install Dependencies
+        run: |
+          npm i
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          config: pageLoadTimeout=100000,baseUrl=http://localhost:3000
