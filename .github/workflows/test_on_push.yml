@@ -1,0 +1,23 @@
+name: GitHub Actions Demo
+on: [push]
+    paths:
+      - '**.js'
+  pull_request:
+    branches: [main]
+      paths:
+      - '**.js'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [17.x]
+    steps:
+      - name: 📁 Check out repository code
+        uses: actions/checkout@v3
+      - name: 🔰 Install Dependencies
+        run: | 
+          npm i
+      - name: 🔶 Start Unit Test
+        run : |
+          npm run test
