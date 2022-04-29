@@ -26,9 +26,7 @@ jobs:
       - name: 🔰 Install Dependencies
         run: |
           npm i
-      - name: run application for e2e test
-        run: npm start
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          config: pageLoadTimeout=100000,baseUrl=http://localhost:3000
+          start: npm start
