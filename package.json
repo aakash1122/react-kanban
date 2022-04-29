@@ -29,6 +29,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false && npm run e2e:headless",
+    "unit:test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "e2e": "cypress run --headed",
     "e2e:headless": "cypress run --headless"

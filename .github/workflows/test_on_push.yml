@@ -1,7 +1,7 @@
 name: GitHub Actions Demo
 on: [push]
 jobs:
-  test:
+  unit_test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -13,8 +13,5 @@ jobs:
         run: |
           npm i
       - name: 🔶 Start Unit Test
-        uses: cypress-io/github-action@v2
-        with:
-          config: pageLoadTimeout=100000,baseUrl=http://localhost:3000
         run: |
-          npm run test
+          npm run unit:test
