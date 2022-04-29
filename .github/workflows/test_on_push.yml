@@ -1,11 +1,5 @@
 name: GitHub Actions Demo
 on: [push]
-    paths:
-      - '**.js'
-  pull_request:
-    branches: [main]
-      paths:
-      - '**.js'
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,8 +10,8 @@ jobs:
       - name: 📁 Check out repository code
         uses: actions/checkout@v3
       - name: 🔰 Install Dependencies
-        run: | 
+        run: |
           npm i
       - name: 🔶 Start Unit Test
-        run : |
+        run: |
           npm run test
