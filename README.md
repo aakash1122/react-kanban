@@ -13,7 +13,7 @@
 - update task 🔥
 - drag and drop task from one column to another 🔥
 - lock task 🔥
-- unlock task task 🔥
+- unlock task 🔥
 
 ## to run the app,
 
